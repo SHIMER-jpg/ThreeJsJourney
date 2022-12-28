@@ -30,3 +30,5 @@ Its provided by two essential parameters
 - Aspect Ratio -> Width divided by height of the canvas
 
 Objects count with multiple properties such as position (xyz), rotation and scale
+
+# Object transformations

@@ -1,1 +1,4 @@
-node_modules
+**node_modules
+ZZ_*
+ZZ_*/*
+**package-lock.json
