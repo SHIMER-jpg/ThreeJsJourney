@@ -79,3 +79,5 @@ In order to avoid side effects the method Quaternion is used for rotation
 ### Group Class
 
 Group class inherits from Object3D so it has the same methods `position`, `scale`, `rotation`, `quaternion`
+
+# Animations

@@ -36,21 +36,21 @@ scene.add(group);
 
 const cube1 = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  new THREE.MeshBasicMaterial({ color: 0xf0f0f0 })
 );
 cube1.position.x = -1.5;
 group.add(cube1);
 
 const cube2 = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  new THREE.MeshBasicMaterial({ color: 0xff00ff })
 );
 cube2.position.x = 0;
 group.add(cube2);
 
 const cube3 = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  new THREE.MeshBasicMaterial({ color: 0xffaa00 })
 );
 cube3.position.x = 1.5;
 group.add(cube3);
