@@ -28,6 +28,7 @@ Its provided by two essential parameters
   > Small angles lead to a zooming effect while Large angles lead to distortion
 
 - Aspect Ratio -> Width divided by height of the canvas
+- Near and far -> How close and far can the camera see. very small and very large values might lead to a bug called z-fighting where multiple elements fight for the same Z plane
 
 Objects count with multiple properties such as position (xyz), rotation and scale
 
@@ -81,3 +82,95 @@ In order to avoid side effects the method Quaternion is used for rotation
 Group class inherits from Object3D so it has the same methods `position`, `scale`, `rotation`, `quaternion`
 
 # Animations
+
+`requestAnimationFrame` will execute the function provided on the next frame, but if used within itself we can create a loop that never ends
+
+If this loop is used like this a higher frame rate will lead to a higher speed, which leads to unappropriated behaviors when switching computers
+
+Calculating a Date.now() to use as a multiplying factor helps maintiain the speed
+
+### Clock
+
+The CLOCK class helps getting elapsed time with the method `getElapsedTime()`
+
+### Gsap
+
+Gsap library is better for creating more complex animatio0ns
+
+# Cameras
+
+### ArrayCamera
+
+The ArrayCamera is used to render your scene multiple times by using multiple cameras. Each camera will render a specific area of the canvas. You can imagine this looking like old school console multiplayer games where we had to share a split-screen.
+
+### StereoCamera
+
+The StereoCamera is used to render the scene through two cameras that mimic the eyes in order to create what we call a parallax effect that will lure your brain into thinking that there is depth. You must have the adequate equipment like a VR headset or red and blue glasses to see the result.
+
+### CubeCamera
+
+The CubeCamera is used to get a render facing each direction (forward, backward, leftward, rightward, upward, and downward) to create a render of the surrounding. You can use it to create an environment map for reflection or a shadow map. We'll talk about those later.
+
+### OrthographicCamera
+
+The OrthographicCamera is used to create orthographic renders of your scene without perspective. It's useful if you make an RTS game like Age of Empire. Elements will have the same size on the screen regardless of their distance from the camera.
+
+### PerspectiveCamera
+
+The PerspectiveCamera is the one we already used and simulated a real-life camera with perspective.
+
+We are going to focus on the OrthographicCamera and the PerspectiveCamera.
+
+> Keep in mind that many parameters coming from the window and window events may need a re-mapping
+> Mouse movement events will deliver a x along the width value and y along the height value
+> In order to use this for camera movements they need to be brought to normalized values
+
+## Built In controls
+
+### DeviceOrientationControls
+
+---
+
+DeviceOrientationControls will automatically retrieve the device orientation if your device, OS, and browser allow it and rotate the camera accordingly. You can use it to create immersive universes or VR experiences if you have the right equipment.
+
+### FlyControls
+
+---
+
+FlyControls enable moving the camera like if you were on a spaceship. You can rotate on all 3 axes, go forward and go backward.
+
+### FirstPersonControls
+
+---
+
+FirstPersonControls is just like FlyControls, but with a fixed up axis. You can see that like a flying bird view where the bird cannot do a barrel roll. While the FirstPersonControls contains "FirstPerson," it doesn't work like in FPS games.
+
+### PointerLockControls
+
+---
+
+PointerLockControls uses the pointer lock JavaScript API. This API hides the cursor, keeps it centered, and keeps sending the movements in the mousemove event callback. With this API, you can create FPS games right inside the browser. While this class sounds very promising if you want to create that kind of interaction, it'll only handle the camera rotation when the pointer is locked. You'll have to handle the camera position and game physics by yourself.
+
+### OrbitControls
+
+---
+
+OrbitControls is very similar to the controls we made in the previous lesson. You can rotate around a point with the left mouse, translate laterally using the right mouse, and zoom in or out using the wheel.
+
+### TrackballControls
+
+---
+
+TrackballControls is just like OrbitControls but there are no limits in terms of vertical angle. You can keep rotating and do spins with the camera even if the scene gets upside down.
+
+### TransformControls
+
+---
+
+TransformControls has nothing to do with the camera. You can use it to add a gizmo to an object to move that object.
+
+### DragControls
+
+---
+
+Just like the TransformControls, DragControls has nothing to do with the camera. You can use it to move objects on a plane facing the camera by drag and dropping them.

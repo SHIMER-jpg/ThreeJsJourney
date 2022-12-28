@@ -1,72 +1,57 @@
 import "./style.css";
 import * as THREE from "three";
-//Canvas
+import gsap from "gsap";
+// Canvas
 const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
 
-// //Object
-// const geometry = new THREE.BoxGeometry(1, 1, 1);
-// const material = new THREE.MeshBasicMaterial({ color: "#ff0000" });
-// const mesh = new THREE.Mesh(geometry, material);
+// Object
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
-// scene.add(mesh);
-
+// Sizes
 const sizes = {
   width: 800,
   height: 600,
 };
 
+// Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 camera.position.z = 3;
 scene.add(camera);
 
+// Renderer
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
-
-/**
- * Objects
- */
-const group = new THREE.Group();
-group.scale.y = 2;
-group.rotation.y = 0.2;
-scene.add(group);
-
-const cube1 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0xf0f0f0 })
-);
-cube1.position.x = -1.5;
-group.add(cube1);
-
-const cube2 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0xff00ff })
-);
-cube2.position.x = 0;
-group.add(cube2);
-
-const cube3 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0xffaa00 })
-);
-cube3.position.x = 1.5;
-group.add(cube3);
-
-scene.add(group);
-
-const axesHelper = new THREE.AxesHelper(2);
+const axesHelper = new THREE.AxesHelper(3);
 scene.add(axesHelper);
 
-//Set up renderer
 renderer.setSize(sizes.width, sizes.height);
-
-//Execute scene
 renderer.render(scene, camera);
 
-setInterval(() => {
-  group.rotation.y += Math.PI * 0.0025;
-  renderer.render(scene, camera);
-}, 10);
+const reRender = () => renderer.render(scene, camera);
+const origin = new THREE.Vector3(0, 0, 0);
+
+gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 });
+
+const clock = new THREE.Clock();
+const tick = () => {
+  const elapsedTime = clock.getElapsedTime();
+  // Update objects
+  mesh.rotation.x += 0.01 * Math.tan(elapsedTime);
+  mesh.rotation.y -= 0.05 * Math.tan(elapsedTime);
+
+  mesh.position.x = 1 * Math.cos(elapsedTime);
+  mesh.position.y = 1 * Math.sin(elapsedTime);
+  camera.lookAt(mesh.position);
+
+  reRender();
+  window.requestAnimationFrame(tick);
+};
+
+tick();
