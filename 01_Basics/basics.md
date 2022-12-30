@@ -174,3 +174,15 @@ TransformControls has nothing to do with the camera. You can use it to add a giz
 ---
 
 Just like the TransformControls, DragControls has nothing to do with the camera. You can use it to move objects on a plane facing the camera by drag and dropping them.
+
+### Code for full screening
+
+```javascript
+window.addEventListener("dblclick", () => {
+  if (document.fullscreenElement) {
+    canvas.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+});
+```
