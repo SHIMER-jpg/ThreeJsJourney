@@ -186,3 +186,38 @@ window.addEventListener("dblclick", () => {
   }
 });
 ```
+
+# Geometries
+
+Geometries are constituted by vertices that can accept al type of properties and be made into particles
+
+Geometries are created from `BufferGeometry`
+
+Available geometries:
+
+- BoxGeometry
+- PlaneGeometry
+- CircleGeometry
+- ConeGeometry
+- CylinderGeometry
+- RingGeometry
+- TorusGeometry
+- TorusKnotGeometry
+- DodecahedronGeometry
+- Octahedron
+- TetraHedron
+- IcosahedronGeometry
+- SphereGeometry
+- ShapeGeometry -> Uses Bezier curves
+- TubeGeometry
+- ExtrudeGeometry
+- LatheGeometry
+- TextGeometry
+
+Geometries are combined in order to create elements, if it gets to complex we can use a software like blender in order to manage more complex figures
+
+All geometries have parameters related to their geometry, in the case of box would be `widht`, `height`, `depth` and afterwards they have the amount of segments we want in each face, again in the case of the box we have, `widht segments`, `height segments`, `depth segments`
+
+![](../resources/20221230172731.png)
+
+We are going to design our own triangles and we are going to use the `Float32Array` which has a typed structure and fixed length

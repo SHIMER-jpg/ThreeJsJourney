@@ -1,6 +1,7 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { degToRad } from "three/src/math/MathUtils";
 
 /**
  * Base
@@ -37,13 +38,46 @@ window.addEventListener("dblclick", () => {
 // Scene
 const scene = new THREE.Scene();
 
+//Triangle
+const positionArray = new Float32Array([2, 0, 0, 0, 2, 0, 0, 0, 2]);
+const positionAttribute = new THREE.BufferAttribute(positionArray, 3);
+// new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+const geometry = new THREE.BufferGeometry();
+geometry.setAttribute("position", positionAttribute);
+
+const triangle = new THREE.Mesh(
+  geometry,
+  new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+);
+
 // Object
 const mesh = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
-  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  new THREE.BoxGeometry(1, 1, 1, 15, 15, 15),
+  new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
 );
-scene.add(mesh);
 
+//Random Figure
+const cant = 50; // desired triangles * 3 triangles vertex * 3 points to describe a vertex
+const randGeometry = new THREE.BufferGeometry();
+const randPositionArray = new Float32Array(cant * 3 * 3).map(
+  () => (Math.random() - 0.5) * 3
+);
+const randomPositionAttribute = new THREE.BufferAttribute(randPositionArray, 3);
+randGeometry.setAttribute("position", randomPositionAttribute);
+
+const randObject = new THREE.Mesh(
+  randGeometry,
+  new THREE.MeshBasicMaterial({ color: 0xaaffaa, wireframe: true })
+);
+
+const group = new THREE.Group();
+group.add(randObject);
+group.add(triangle);
+group.add(mesh);
+
+scene.add(group);
+mesh.rotation.y = ((2 * Math.PI) / 360) * 45;
+mesh.rotation.x = ((2 * Math.PI) / 360) * 45;
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 
@@ -63,12 +97,16 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 
+const clock = new THREE.Clock();
 // Animate
 const tick = () => {
   //   // Render
+  const elapsed = clock.getElapsedTime();
   controls.update();
   renderer.render(scene, camera);
-
+  group.rotation.x += 0.005 * Math.sin(elapsed);
+  group.rotation.y += 0.005 * Math.sin(elapsed);
+  // camera.lookAt(mesh);
   // Call tick again on the next frame
   window.requestAnimationFrame(tick);
 };
