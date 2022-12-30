@@ -221,3 +221,24 @@ All geometries have parameters related to their geometry, in the case of box wou
 ![](../resources/20221230172731.png)
 
 We are going to design our own triangles and we are going to use the `Float32Array` which has a typed structure and fixed length
+
+# Debug UI
+
+We need an UI that allows us to tweak elements and their properties
+The main ones are
+
+- dat.GUI --> Replaced for Lil.gui
+- control-panel
+- Control.Kit
+- Guify
+- Oui
+
+Elements found in GUIS
+
+- Range - for numbers with min max values
+- COlor - colors and color formats
+- Text - simple texts
+- Checkbox - for booleans
+- Select - a choice from a list of values
+- Button - To trigger functions
+- Folder - To organize your panel

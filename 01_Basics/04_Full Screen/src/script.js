@@ -1,7 +1,17 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { degToRad } from "three/src/math/MathUtils";
+import * as lil from "lil-gui";
+import gsap from "gsap";
+
+/**
+ * Tweaks
+ */
+const gui = new lil.GUI();
+const Box = gui.addFolder("Box");
+const Triangle = gui.addFolder("Triangle");
+const Random = gui.addFolder("Random Object");
+const Animation = gui.addFolder("Animation");
 
 /**
  * Base
@@ -27,13 +37,13 @@ window.addEventListener("resize", () => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio), 2);
 });
 
-window.addEventListener("dblclick", () => {
-  if (!document.fullscreenElement) {
-    canvas.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
-});
+// window.addEventListener("dblclick", () => {
+//   if (!document.fullscreenElement) {
+//     canvas.requestFullscreen();
+//   } else {
+//     document.exitFullscreen();
+//   }
+// });
 
 // Scene
 const scene = new THREE.Scene();
@@ -56,6 +66,24 @@ const mesh = new THREE.Mesh(
   new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
 );
 
+const parameters = {
+  spin: () => {
+    gsap.to(mesh.rotation, {
+      duration: 1,
+      y: mesh.rotation.y + 10,
+      x: mesh.rotation.x + 10,
+    });
+  },
+};
+
+Box.add(parameters, "spin");
+Box.add(mesh.position, "x").min(-2).max(2).step(0.01).name("Horizontal");
+Box.add(mesh.position, "y").min(-2).max(2).step(0.01).name("Elevation");
+Box.add(mesh.position, "z").min(-2).max(2).step(0.01).name("Closeness");
+Box.add(mesh.material, "wireframe");
+Box.add(mesh, "visible");
+Box.addColor(mesh.material, "color");
+
 //Random Figure
 const cant = 50; // desired triangles * 3 triangles vertex * 3 points to describe a vertex
 const randGeometry = new THREE.BufferGeometry();
@@ -67,7 +95,7 @@ randGeometry.setAttribute("position", randomPositionAttribute);
 
 const randObject = new THREE.Mesh(
   randGeometry,
-  new THREE.MeshBasicMaterial({ color: 0xaaffaa, wireframe: true })
+  new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true })
 );
 
 const group = new THREE.Group();
