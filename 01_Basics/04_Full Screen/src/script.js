@@ -140,3 +140,7 @@ const tick = () => {
 };
 
 tick();
+
+window.addEventListener("keydown", ({ key }) => {
+  if (key.toLowerCase() === "h") gui._hidden ? gui.show() : gui.hide();
+});

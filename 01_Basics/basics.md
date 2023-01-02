@@ -242,3 +242,67 @@ Elements found in GUIS
 - Select - a choice from a list of values
 - Button - To trigger functions
 - Folder - To organize your panel
+
+# Textures
+
+Textures are images that cover the surface of a geometry
+Most common types:
+
+- Color Textures -> Color that is applied on the geometry
+- Alpha -> Gray scale, white visible, black not visible
+- Height -> Moves the vertices up to create texture, they often depend on the amount of sub division
+- Normal -> Adds details regarding light, does not need subdivision, the vertices do not move, lure the light about the face, has better performance
+- Ambient Occlusion -> another grayscale, adds fake shadows in crevices (angles), not phisically accyurate, helps creat contract
+- Metalness -> Grayscale where white is metallic and is mostly used for reflections
+- Roughness -> Grayscale where white is rough and black is smooth
+
+This textures follow Physically based rendering (PBR) principles, where the technics are oriented for getting realistic results
+
+`LoadingManager` is a class that helps us display an understand how the loading progress is
+
+### UV UNWRAPPING
+
+We map each vertex to a 2D plane usually a square or rectangle
+![](../resources/20221230202403.png)  
+![](../resources/20221230202458.png)
+
+In three JS each geometry has a UV property which is a Float32Buffer which with all the coordinates of the shape. This is what we use to map textures
+
+**To make your custom geometries and 3d elements you need to unwrap with blender since you need your own UV coordinates**
+
+# Transforming Textures
+
+Each texture has properties such as
+
+- repeat (x,y) -> Repeats the last pixel of the texture, with wrap you can repeat the texture over the geometry
+- wrap (s,t) -> repeats the texture
+- offset (x,y) -> which displace the texture
+- rotation (x,y) -> rotates the texture
+- center -> Where the texture's center of rotation located
+
+# Mip Mapping & Filtering
+
+Amount of pixels I can see from the distance to the object
+
+- Minification filter -> its applied when te texture is too big for the surface, we can change it by change the `minFilter` in the texture object, belows are the possible
+  - THREE.NearestFilter
+  - THREE.LinearFilter
+  - THREE.NearestMipmapNearestFilter
+  - THREE.NearestMipmapLinearFilter
+  - THREE.LinearMipmapNearestFilter
+  - THREE.LinearMipmapLinearFilter
+
+.jpg carries compression but is lighter
+.png lossless compression but its usually heavier
+
+Using multiple textures we need to send them as small as possible in order to optimize **GPU performance**
+
+Mip Mappings need textures that are divisible by 2
+
+Websites to find textures:
+
+- poliigon.com
+- 3dtextures.me
+- arroway-textures.ch
+
+# Materials

@@ -2,3 +2,5 @@
 ZZ_*
 ZZ_*/*
 **package-lock.json
+
+**.lock
