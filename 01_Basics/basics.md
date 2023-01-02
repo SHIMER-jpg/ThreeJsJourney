@@ -306,3 +306,5 @@ Websites to find textures:
 - arroway-textures.ch
 
 # Materials
+
+Are used to put colors in the geometry
